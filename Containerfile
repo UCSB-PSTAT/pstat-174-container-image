@@ -4,10 +4,13 @@ LABEL maintainer="LSIT Systems <lsitops@ucsb.edu>"
 
 USER root
 
-RUN apt install https://apache.jfrog.io/artifactory/arrow/ubuntu/apache-arrow-apt-source-latest-jammy.deb && \
+RUN cd /tmp && \
+    wget "https://apache.jfrog.io/artifactory/arrow/ubuntu/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb" && \
+    apt install /tmp/apache-arrow-apt-source-*.deb && \
     apt update && \
     apt install -y libarrow-dev && \
-    apt-get clean
+    apt-get clean && \
+    rm -f /tmp/apache-arrow-apt-source-*.deb
 
 RUN R -e "install.packages(c('astsa'), repos = 'https://cloud.r-project.org/', Ncpus = parallel::detectCores())"
 
