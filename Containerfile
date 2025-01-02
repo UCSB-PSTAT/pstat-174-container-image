@@ -8,6 +8,7 @@ RUN R -e "install.packages(c('astsa'), repos = 'https://cloud.r-project.org/', N
 
 RUN conda install -yc conda-forge orjson pyarrow numpy
 
-RUN pip install gluonts[ext,torch,mxnet,pro,R]
+RUN python -m ensurepip --upgrade && \
+    pip install gluonts[ext,torch,mxnet,pro,R]
 
 USER $NB_USER
