@@ -9,8 +9,8 @@ RUN R -e "install.packages(c('astsa'), repos = 'https://cloud.r-project.org/', N
 RUN conda install -yc conda-forge orjson pyarrow
 
 RUN python -m ensurepip --upgrade && \
-    python -m pip install --upgrade setuptools && \
-    python -m pip install --upgrade pip && \
-    pip install gluonts[ext,torch,mxnet,pro,R]
+    python -m pip install --root-user-action=ignore --upgrade setuptools && \
+    python -m pip install --root-user-action=ignore --upgrade pip && \
+    python -m pip install --root-user-action=ignore gluonts[ext,torch,mxnet,pro,R] numpy==1.26.4
 
 USER $NB_USER
