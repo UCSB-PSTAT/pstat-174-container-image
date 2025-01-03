@@ -6,11 +6,8 @@ USER root
 
 RUN R -e "install.packages(c('astsa'), repos = 'https://cloud.r-project.org/', Ncpus = parallel::detectCores())"
 
-RUN conda install -yc conda-forge orjson pyarrow
+RUN conda install -yc conda-forge orjson pyarrow gluonts pytorch-forecasting
 
-RUN python -m ensurepip --upgrade && \
-    python -m pip install --root-user-action=ignore --upgrade setuptools && \
-    python -m pip install --root-user-action=ignore --upgrade pip && \
-    python -m pip install --root-user-action=ignore gluonts[ext,torch,mxnet,pro,R] numpy==1.26.4
+RUN pip install chronos-forecasting
 
 USER $NB_USER
