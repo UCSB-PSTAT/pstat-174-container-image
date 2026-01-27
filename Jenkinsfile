@@ -35,7 +35,7 @@ pipeline {
                     steps {
                         container('podman') {
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME which rstudio'
-                            sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME R -q -e "getRversion() >= \\"4.1.3\\"" | tee /dev/stderr | grep -q "TRUE"'
+                            sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME R -q -e "getRversion() >= \\"4.5.2\\"" | tee /dev/stderr | grep -q "TRUE"'
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME R -e "library(\"astsa\"); library(\"bsts\"); library(\"forecast\"); library(\"quantmod\"); library(\"tidyverse\"); library(\"tseries\"); library(\"xts\")"'
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME python -c "import gluonts; import pyarrow; from chronos import BaseChronosPipeline; import pytorch_forecasting"'
                             sh 'podman run -d --name=$IMAGE_NAME --rm --pull=never -p 8888:8888 localhost/$IMAGE_NAME start-notebook.sh --NotebookApp.token="jenkinstest"'
