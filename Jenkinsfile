@@ -38,6 +38,7 @@ pipeline {
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME R -q -e "getRversion() >= \\"4.5.2\\"" | tee /dev/stderr | grep -q "TRUE"'
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME R -e "library(\"astsa\"); library(\"bsts\"); library(\"forecast\"); library(\"quantmod\"); library(\"tidyverse\"); library(\"tseries\"); library(\"xts\")"'
                             sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME python -c "import gluonts; import pyarrow; from chronos import BaseChronosPipeline; import pytorch_forecasting"'
+                            sh 'podman run -it --rm --pull=never localhost/$IMAGE_NAME python -c "import pandas as pd; from autogluon.timeseries import TimeSeriesDataFrame, TimeSeriesPredictor"'
                             sh 'podman run -d --name=$IMAGE_NAME --rm --pull=never -p 8888:8888 localhost/$IMAGE_NAME start-notebook.sh --NotebookApp.token="jenkinstest"'
                             sh 'sleep 10 && curl -v http://localhost:8888/rstudio?token=jenkinstest 2>&1 | grep -P "HTTP\\S+\\s[1-3][0-9][0-9]\\s+[\\w\\s]+\\s*$"'
                             sh 'curl -v http://localhost:8888/lab?token=jenkinstest 2>&1 | grep -P "HTTP\\S+\\s200\\s+[\\w\\s]+\\s*$"'
