@@ -4,9 +4,8 @@ LABEL maintainer="LSIT Systems <lsitops@ucsb.edu>"
 
 USER root
 
-
 RUN conda install -yc conda-forge gluonts orjson pyarrow pytorch-lightning r-astsa r-bsts
 
-RUN pip install chronos-forecasting pytorch-forecasting
+RUN pip install chronos-forecasting pytorch-forecasting autogluon pandas
 
 USER $NB_USER
